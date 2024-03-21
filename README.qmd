@@ -1,0 +1,75 @@
+---
+title: Testing network simplification with parenx + rnetmatch
+format: gfm
+---
+
+
+```{bash}
+#| eval: false
+pip install parenx
+```
+
+
+```{python}
+import osmnx as ox
+import parenx as px
+import geopandas as gpd
+```
+
+```{python}
+# Check which functions are available in the parenx package:
+dir(px)
+```
+
+```{python}
+```
+
+We'll get some data read-in as a geopandas df and take it from there...
+
+```{python}
+url = 'https://github.com/anisotropi4/parenx/raw/main/data/rnet_princes_street.geojson'
+# Let's simplify the network:
+# gdf_simple = px.skeletonize.skeletonize.frame(gdf)
+```
+
+
+```{bash}
+wget https://github.com/anisotropi4/parenx/raw/main/data/rnet_princes_street.geojson -O rnet_princes_street.geojson
+```
+
+```{bash}
+skeletonize.py rnet_princes_street.geojson rnet_princes_street_skeleton.gpkg
+```
+
+```{r}
+sf::st_layers('rnet_princes_street_skeleton.gpkg')
+```
+
+```{r}
+```
+
+```{python}
+gdf = gpd.read_file('rnet_princes_street.geojson')
+gdf_skeleton = gpd.read_file('rnet_princes_street_skeleton.gpkg', layer='line')
+# CRS of both dataframes
+gdf.crs, gdf_skeleton.crs
+```
+
+```{python}
+# column names of both dataframes
+gdf.columns, gdf_skeleton.columns
+```
+
+```{python}
+# plot the original network
+gdf.plot()
+```
+
+```{python}
+# plot the skeletonized network
+gdf_skeleton.plot()
+```
+
+# rnetmatch
+
+
